@@ -2,22 +2,31 @@ const keys = document.querySelectorAll(".key"),
   note = document.querySelector(".nowplaying");
 
 function playNote(e) {
-  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`),
+  let key, audio;
+
+  if (e.type === "keydown") {
+    audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
     key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-  if (!key) 
-    return;
+  } else {
+    key = e.currentTarget;
+    audio = document.querySelector(`audio[data-key="${key.getAttribute("data-key")}"]`);
+  }
+
+  if (!key || !audio) return;
+
   const keyNote = key.getAttribute("data-note");
   key.classList.add("playing");
   note.innerHTML = keyNote;
   audio.currentTime = 0;
-  audio.play();
 
-  showMusicImage(e);
+  // منع الخطأ عند تشغيل الصوت على الجوال
+  audio.play().catch(() => { });
+
+  showMusicImage();
 }
 
 function removeTransition(e) {
-  if (e.propertyName !== "transform") 
-    return;
+  if (e.propertyName !== "transform") return;
   this.classList.remove("playing");
 }
 
@@ -43,7 +52,7 @@ document.addEventListener("mousemove", function (event) {
   }, 500);
 });
 
-function showMusicImage(e) {
+function showMusicImage() {
   const image = document.createElement("img");
   image.src = "m.png";
   image.classList.add("note");
@@ -58,3 +67,16 @@ function showMusicImage(e) {
     setTimeout(() => image.remove(), 500);
   }, 500);
 }
+
+keys.forEach((key) => {
+  key.addEventListener("transitionend", removeTransition);
+  
+  key.addEventListener("touchstart", (e) => {
+    e.preventDefault(); 
+    playNote(e);
+  });
+
+  key.addEventListener("touchend", (e) => {
+    e.currentTarget.classList.remove("playing");
+  });
+});

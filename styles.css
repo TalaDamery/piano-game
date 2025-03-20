@@ -101,6 +101,8 @@ h2 {
   transition: all 0.1s ease;
   color: #333;
   position: relative;
+  touch-action: none;
+  user-select: none;  
 }
 
 
