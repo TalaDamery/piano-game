@@ -1,0 +1,139 @@
+body {
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  font-family:monospace;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  cursor: none;
+}
+
+header {
+  margin: 40px 0;
+}
+
+h1 {
+  font-size: 70px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #ffd700;
+  text-shadow: 2px 2px 15px rgba(255, 215, 0, 0.6);
+  animation: glow 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 2px 2px 15px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    text-shadow: 2px 2px 25px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    text-shadow: 2px 2px 15px rgba(255, 215, 0, 0.3);
+  }
+}
+
+
+h2 {
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: #ddd;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #ddd;
+  animation: typing 6s steps(20, end) infinite alternate, blink 0.9s infinite;
+  width: 0ch; 
+}
+
+@keyframes typing {
+  0% {
+    width: 0ch;
+  }
+  50% {
+    width: 30ch;
+  }
+  100% {
+    width: 0ch; 
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.nowplaying {
+  font-size: 110px;
+  color: #ffd700;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  min-height: 120px;
+  transition: all 0.2s ease;
+}
+
+.keys {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 20px;
+  padding: 20px;
+  position: relative;
+}
+
+
+.key {
+  width: 70px;
+  height: 280px;
+  border-radius: 15px;
+  margin: 5px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(180deg, #ffffff, #eeeeee);
+  border: 3px solid #777;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.1s ease;
+  color: #333;
+  position: relative;
+}
+
+
+.key.sharp {
+  height: 170px;
+  width: 50px;
+  background: linear-gradient(180deg, #111, #444);
+  color: white;
+  position: relative;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: 119px;
+  z-index: 2;
+}
+
+.playing {
+  transform: scale(1.1);
+  border-color: #ffd700;
+  box-shadow: 0 0 20px #ffd700, inset 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.hints {
+  font-size: 18px;
+  opacity: 0.7;
+  color: #bbb;
+  margin-top: 20px;
+}
+
+.note {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  transition: opacity 0.5s, transform 0.5s;
+  mix-blend-mode: darken;
+}
