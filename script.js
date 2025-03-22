@@ -1,7 +1,6 @@
 const keys = document.querySelectorAll(".key"),
   note = document.querySelector(".nowplaying");
 
-
 function playNoteByKeyCode(keyCode) {
   const audio = document.querySelector(`audio[data-key="${keyCode}"]`),
     key = document.querySelector(`.key[data-key="${keyCode}"]`);
@@ -11,11 +10,14 @@ function playNoteByKeyCode(keyCode) {
   key.classList.add("playing");
   note.innerHTML = keyNote;
   audio.currentTime = 0;
+  audio.play();
+
   showMusicImage();
 }
 
 function removeTransition(e) {
-  if (e.propertyName !== "transform") return;
+  if (e.propertyName !== "transform") 
+    return;
   this.classList.remove("playing");
 }
 
@@ -50,7 +52,7 @@ document.addEventListener("mousemove", function (event) {
   }, 500);
 });
 
-function showMusicImage() {
+function showMusicImage(e) {
   const image = document.createElement("img");
   image.src = "m.png";
   image.classList.add("note");
@@ -65,5 +67,3 @@ function showMusicImage() {
     setTimeout(() => image.remove(), 500);
   }, 500);
 }
-
-
