@@ -66,15 +66,4 @@ function showMusicImage() {
   }, 500);
 }
 
-keys.forEach((key) => {
-  key.addEventListener("transitionend", removeTransition);
-  
-  key.addEventListener("touchstart", (e) => {
-    e.preventDefault(); 
-    playNote(e);
-  });
 
-  key.addEventListener("touchend", (e) => {
-    e.currentTarget.classList.remove("playing");
-  });
-});
