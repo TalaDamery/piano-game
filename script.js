@@ -1,9 +1,9 @@
 const keys = document.querySelectorAll(".key"),
   note = document.querySelector(".nowplaying");
 
-function playNote(e) {
-  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`),
-    key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+function playNoteByKeyCode(keyCode) {
+  const audio = document.querySelector(`audio[data-key="${keyCode}"]`),
+    key = document.querySelector(`.key[data-key="${keyCode}"]`);
   if (!key) 
     return;
   const keyNote = key.getAttribute("data-note");
@@ -12,7 +12,7 @@ function playNote(e) {
   audio.currentTime = 0;
   audio.play();
 
-  showMusicImage(e);
+  showMusicImage();
 }
 
 function removeTransition(e) {
@@ -21,8 +21,17 @@ function removeTransition(e) {
   this.classList.remove("playing");
 }
 
-keys.forEach(key => key.addEventListener("transitionend", removeTransition));
-window.addEventListener("keydown", playNote);
+window.addEventListener("keydown", e => playNoteByKeyCode(e.keyCode));
+
+keys.forEach(key => {
+  key.addEventListener("transitionend", removeTransition);
+  key.addEventListener("touchstart", e =>{
+    e.preventDefault();
+    const keyCode = key.getAttribute("data-key");
+    playNoteByKeyCode(keyCode);
+  });
+});
+
 
 document.addEventListener("mousemove", function (event) {
   let note = document.createElement("img");
