@@ -1,27 +1,16 @@
 const keys = document.querySelectorAll(".key"),
   note = document.querySelector(".nowplaying");
 
-function playNote(e) {
-  let key, audio;
 
-  if (e.type === "keydown") {
-    audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-  } else {
-    key = e.currentTarget;
-    audio = document.querySelector(`audio[data-key="${key.getAttribute("data-key")}"]`);
-  }
-
-  if (!key || !audio) return;
-
+function playNoteByKeyCode(keyCode) {
+  const audio = document.querySelector(`audio[data-key="${keyCode}"]`),
+    key = document.querySelector(`.key[data-key="${keyCode}"]`);
+  if (!key) 
+    return;
   const keyNote = key.getAttribute("data-note");
   key.classList.add("playing");
   note.innerHTML = keyNote;
   audio.currentTime = 0;
-
-  // منع الخطأ عند تشغيل الصوت على الجوال
-  audio.play().catch(() => { });
-
   showMusicImage();
 }
 
@@ -30,8 +19,17 @@ function removeTransition(e) {
   this.classList.remove("playing");
 }
 
-keys.forEach(key => key.addEventListener("transitionend", removeTransition));
-window.addEventListener("keydown", playNote);
+window.addEventListener("keydown", e => playNoteByKeyCode(e.keyCode));
+
+keys.forEach(key => {
+  key.addEventListener("transitionend", removeTransition);
+  key.addEventListener("touchstart", e =>{
+    e.preventDefault();
+    const keyCode = key.getAttribute("data-key");
+    playNoteByKeyCode(keyCode);
+  });
+});
+
 
 document.addEventListener("mousemove", function (event) {
   let note = document.createElement("img");
